@@ -1,0 +1,12 @@
+<div class="row" [class]="task().color">
+  <span class="handle">⠿</span>
+  <button class="icon">{{ task().icon }}</button>
+  <input class="name" [value]="task().name" />
+  <button class="round">−</button>
+  <div class="minutes">
+    <strong>{{ task().minutes }}</strong>
+    <small>min</small>
+  </div>
+  <button class="round">+</button>
+  <button class="round">🗑️</button>
+</div>
