@@ -1,0 +1,32 @@
+<p>timer-view works!</p>
+@if (current(); as task) {
+  <section class="current" [class]="task.color" [style.--left.%]="percentLeft()">
+    <span class="icon">{{ task.icon }}</span>
+    <h2>{{ task.name }}</h2>
+    <span class="time">{{ time() }}</span>
+  </section>
+
+  <div class="controls">
+    <button class="pause" (click)="togglePause()">
+      {{ paused() ? '▶️ Fortsätt' : '⏸️ Paus' }}
+    </button>
+    <button class="ready" (click)="next()">✅ Klar!</button>
+    <button class="stop" (click)="stop.emit()">⏹️ Stopp</button>
+  </div>
+
+  <ul class="upcoming">
+    @for (t of upcoming(); track t.id) {
+      <li [class]="t.color">
+        <span class="small-icon">{{ t.icon }}</span>
+        <span class="name">{{ t.name }} </span>
+        <span class="t">{{ formatTime(t.minutes * 60) }}</span>
+      </li>
+    }
+  </ul>
+} @else {
+  <section class="finished">
+    <p class="big">🎉</p>
+    <h2>Bra jobbat! Allt är klart.</h2>
+    <button class="stop" (click)="stop.emit()">Tillbaka</button>
+  </section>
+}
