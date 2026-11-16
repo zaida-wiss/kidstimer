@@ -1,7 +1,14 @@
-/* You can add global styles to this file, and also import other style files */
-
-/* Medan en uppgift dras (förhandsvisningen finns i DOM:en) visas knuten hand överallt. */
-body:has(.cdk-drag-preview),
-body:has(.cdk-drag-preview) * {
-  cursor: grabbing !important;
+:root {
+  --ink: #1f2a44; --bg: #fdf3dc; --yellow: #f2c81f; --start: #ff5a36;
+  --red: #ff6b6b; --orange: #fbb52c; --green: #5fcb68; --blue: #12abe3;
 }
+body {
+  margin: 0; font-family: 'Fredoka', system-ui, sans-serif;
+  color: var(--ink); background-color: var(--bg);
+  background-image: radial-gradient(rgba(31,42,68,.08) 1px, transparent 1px);
+  background-size: 18px 18px;
+}
+.red { background-color: var(--red); }
+.orange { background-color: var(--orange); }
+.green { background-color: var(--green); }
+.blue { background-color: var(--blue); }

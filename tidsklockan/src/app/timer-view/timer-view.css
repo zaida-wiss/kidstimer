@@ -1,0 +1,31 @@
+:host { display: flex; flex-direction: column; gap: 14px; }
+.current {
+  display: flex; align-items: center; gap: 16px; padding: 26px 22px;
+  border: 3px solid var(--ink); border-radius: 22px; box-shadow: 0 6px 0 var(--ink);
+  /* Den ljusa delen växer från höger när tiden går (använder --left från workshop 5) */
+  background-image: linear-gradient(to left, rgba(255,255,255,.35) calc(100% - var(--left)), transparent 0);
+}
+.current .icon {
+  width: 80px; height: 80px; flex: none; display: grid; place-items: center; font-size: 46px;
+  background: #fff; border: 3px solid var(--ink); border-radius: 16px;
+}
+.current h2 { flex: 1; margin: 0; font-size: 24px; }
+.current .time { font-size: clamp(56px, 16vw, 100px); font-weight: 900; font-variant-numeric: tabular-nums; }
+.controls { display: flex; justify-content: center; gap: 10px; }
+.controls button, .finished button {
+  font: inherit; font-weight: 800; padding: 10px 16px; cursor: pointer;
+  border: 3px solid var(--ink); border-radius: 18px; box-shadow: 0 3px 0 var(--ink);
+}
+.pause { background: var(--yellow); }
+.ready { background: #1fbfb8; }
+.stop { background: #fff; }
+.upcoming { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.upcoming li {
+  display: flex; align-items: center; gap: 12px; padding: 8px 14px; font-weight: 800; font-size: 17px;
+  border: 3px solid var(--ink); border-radius: 16px; box-shadow: 0 3px 0 var(--ink);
+}
+.upcoming .small-icon { font-size: 26px; }
+.upcoming .name { flex: 1; }
+.upcoming .t { font-size: 20px; }
+.finished { text-align: center; }
+.finished .big { font-size: 80px; margin: 0; }

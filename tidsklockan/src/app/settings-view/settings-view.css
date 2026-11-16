@@ -1,3 +1,17 @@
+:host { display: flex; flex-direction: column; gap: 14px; }
+.hint { text-align: center; margin: 0; font-weight: 700; opacity: .75; }
+.list { display: flex; flex-direction: column; gap: 14px; }
+.empty { text-align: center; }
+.add, .total, .start {
+  font: inherit; font-weight: 800; font-size: 17px; padding: 14px; text-align: center;
+  border: 3px solid var(--ink); border-radius: 18px; box-shadow: 0 5px 0 var(--ink);
+}
+.add { background: #fff; cursor: pointer; }
+.total { background: var(--yellow); }
+.start { background: var(--start); color: #fff; font-size: 24px; cursor: pointer; }
+.start:disabled { opacity: .5; cursor: default; }
+
+
 .cdk-drag-preview { box-shadow: 0 10px 20px rgba(0,0,0,.25); }
 .cdk-drag-placeholder { opacity: .3; }
 .cdk-drag-animating,
