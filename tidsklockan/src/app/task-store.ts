@@ -1,6 +1,8 @@
-import { Service, computed, signal } from '@angular/core';
+import { Service, computed, effect, signal } from '@angular/core';
 import { COLORS, ICONS, Task, totalMinutes } from './task.model';
 
+
+const STORAGE_KEY = 'tidsklockan-tasks';
 const DEFAULT_TASKS: Task[] = [
     { id: 1, name: 'Klä på sig', icon: '👕', minutes: 5, color: 'red' },
     { id: 2, name: 'Äta frukost', icon: '🥣', minutes: 15, color: 'orange' },
@@ -8,16 +10,39 @@ const DEFAULT_TASKS: Task[] = [
     { id: 4, name: 'Borsta tänderna', icon: '🪥', minutes: 2, color: 'blue' },
 ];
 
+
 @Service()
 export class TaskStore {
     //Privat, skrivbar signal. Bara servicen får ändra listan.
-    private readonly _tasks = signal<Task[]>(DEFAULT_TASKS);
+    //Startvärdet läses från localStorage om det finns något sparat.
+    private readonly _tasks = signal<Task[]>(this.load());
 
     //Publik, skrivbordsskyddad version för komponenterna.
     readonly tasks = this._tasks.asReadonly();
 
     //Räknas om automatiskt när _tasks ändras.
     readonly total = computed(() => totalMinutes(this._tasks()));
+
+  constructor() {
+    // Körs direkt och sedan varje gång _tasks ändras.
+    effect(() => {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(this._tasks()));
+      } catch {
+        /* t.ex. privat läge – appen fungerar ändå */
+      }
+    });
+  }
+
+  private load(): Task[] {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) return JSON.parse(saved) as Task[];
+    } catch {
+      /* ignorera */
+    }
+    return DEFAULT_TASKS;
+  }
 
       add(): void {
     this._tasks.update(tasks => {

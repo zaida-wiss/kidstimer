@@ -1,4 +1,4 @@
-import { Component, DestroyRef, computed, inject, output, signal } from '@angular/core';
+import { Component, DestroyRef, computed, effect, inject, output, signal } from '@angular/core';
 import { TaskStore } from '../task-store';
 import { formatTime } from '../task.model';
 
@@ -36,6 +36,25 @@ export class TimerView {
     const id = setInterval(() => this.tick(), 1000);
     //Städa upp när komponenten tas bort -annars tickar timern för evigt.
     inject(DestroyRef).onDestroy(() => clearInterval(id));
+
+    // Pip när en uppgifts tid når 0:00.
+    effect(() => {
+      if (this.remaining() === 0 && !this.done()) this.beep();
+    });
+  }
+
+  private beep(): void {
+    try {
+      const ctx = new AudioContext();
+      const osc = ctx.createOscillator();
+      osc.frequency.value = 880;   // ton i Hz
+      osc.connect(ctx.destination);
+      osc.onended = () => ctx.close();   // frigör ljudkanalen när tonen är klar
+      osc.start();
+      osc.stop(ctx.currentTime + 0.3);
+    } catch {
+      /* inget ljud – inget problem */
+    }
   }
 
   private tick(): void {
