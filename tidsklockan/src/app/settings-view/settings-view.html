@@ -1,0 +1,22 @@
+<p class="hint">✋ Håll in en uppgift och dra för att ändra ordning</p>
+
+<div class="list">
+  @for (task of store.tasks(); track task.id) {
+    <app-task-row
+      [task]="task"
+      (minus)="store.changeMinutes(task.id, -1)"
+      (plus)="store.changeMinutes(task.id, 1)"
+      (remove)="store.remove(task.id)"
+      (rename)="store.update(task.id, { name: $event })"
+      (iconClick)="store.nextIcon(task.id)"
+    />
+  } @empty {
+    <p class="empty">Inga uppgifter ännu – lägg till en!</p>
+  }
+</div>
+
+<button class="add" (click)="store.add()">➕ Lägg till uppgift</button>
+<div class="total">Totalt: {{ store.total() }} minuter</div>
+<button class="start" (click)="start.emit()" [disabled]="store.tasks().length === 0">
+  ▶️ Starta!
+</button>

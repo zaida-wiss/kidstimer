@@ -1,13 +1,9 @@
 <main>
   <h1>⏰ Tidsklockan</h1>
 
-  @if (mode() === 'settings') { 
-    @for (task of store.tasks(); track task.id) {
-      <app-task-row [task]="task" />
-    }
-    <div class="total">Totalt: {{ store.total() }} minuter</div>
-    <button class="start" (click) = "mode.set('running')">▶️ Starta!</button>
+  @if (mode() === 'settings') {
+    <app-settings-view (start)="mode.set('running')" />
   } @else {
-    <app-timer-view (stop) ="mode.set('settings')" />
+    <app-timer-view (stop)="mode.set('settings')" />
   }
 </main>

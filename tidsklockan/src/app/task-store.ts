@@ -1,5 +1,5 @@
 import { Service, computed, signal } from '@angular/core';
-import { Task, totalMinutes } from './task.model';
+import { COLORS, ICONS, Task, totalMinutes } from './task.model';
 
 const DEFAULT_TASKS: Task[] = [
     { id: 1, name: 'Klä på sig', icon: '👕', minutes: 5, color: 'red' },
@@ -18,4 +18,36 @@ export class TaskStore {
 
     //Räknas om automatiskt när _tasks ändras.
     readonly total = computed(() => totalMinutes(this._tasks()));
+
+      add(): void {
+    this._tasks.update(tasks => {
+      const id = Math.max(0, ...tasks.map(t => t.id)) + 1;
+      const color = COLORS[tasks.length % COLORS.length];
+      return [...tasks, { id, name: 'Ny uppgift', icon: '⭐', minutes: 5, color }];
+    });
+  }
+
+  remove(id: number): void {
+    this._tasks.update(tasks => tasks.filter(t => t.id !== id));
+  }
+
+  // Partial<Task> = ett objekt med några (valfria) av Tasks fält.
+  update(id: number, changes: Partial<Task>): void {
+    this._tasks.update(tasks => tasks.map(t => (t.id === id ? { ...t, ...changes } : t)));
+  }
+
+  changeMinutes(id: number, delta: number): void {
+    const task = this._tasks().find(t => t.id === id);
+    if (!task) return;
+    const minutes = Math.min(60, Math.max(1, task.minutes + delta));
+    this.update(id, { minutes });
+  }
+
+  nextIcon(id: number): void {
+    const task = this._tasks().find(t => t.id === id);
+    if (!task) return;
+    const icon = ICONS[(ICONS.indexOf(task.icon) + 1) % ICONS.length];
+    this.update(id, { icon });
+  }
+
 }
