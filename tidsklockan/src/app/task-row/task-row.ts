@@ -1,8 +1,9 @@
 import { Component, input, output } from '@angular/core';
 import { Task } from '../task.model';
+import { CdkDragHandle } from '@angular/cdk/drag-drop';
 
 @Component({
-  imports: [],
+  imports: [CdkDragHandle],
   selector: 'app-task-row',
   styleUrl: './task-row.css',
   templateUrl: './task-row.html',

@@ -1,0 +1,10 @@
+/* Handtaget visar en "hand" när man hovrar, och en knuten hand när man håller in. */
+.handle {
+  cursor: grab;
+  touch-action: none; /* hindrar att sidan scrollar i stället för att dra på mobil */
+  user-select: none;
+}
+
+.handle:active {
+  cursor: grabbing;
+}

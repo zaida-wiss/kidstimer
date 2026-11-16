@@ -1,1 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* Medan en uppgift dras (förhandsvisningen finns i DOM:en) visas knuten hand överallt. */
+body:has(.cdk-drag-preview),
+body:has(.cdk-drag-preview) * {
+  cursor: grabbing !important;
+}

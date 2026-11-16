@@ -1,8 +1,8 @@
 <p class="hint">✋ Håll in en uppgift och dra för att ändra ordning</p>
 
-<div class="list">
+<div class="list" cdkDropList (cdkDropListDropped)="drop($event)">
   @for (task of store.tasks(); track task.id) {
-    <app-task-row
+    <app-task-row cdkDrag
       [task]="task"
       (minus)="store.changeMinutes(task.id, -1)"
       (plus)="store.changeMinutes(task.id, 1)"

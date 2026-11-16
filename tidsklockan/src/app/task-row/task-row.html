@@ -1,5 +1,5 @@
 <div class="row" [class]="task().color">
-  <span class="handle">⠿</span>
+  <span class="handle" cdkDragHandle title="Dra för att flytta">⠿</span>
   <button class="icon" (click)="iconClick.emit()" title="Byt bild">{{ task().icon }}</button>
   <input class="name" [value]="task().name" (input)="onNameInput($event)" />
   <button class="round" (click)="minus.emit()" aria-label="Minska">−</button>

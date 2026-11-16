@@ -50,4 +50,14 @@ export class TaskStore {
     this.update(id, { icon });
   }
 
+  move(from: number, to: number): void {
+    this._tasks.update(tasks => {
+        const copy = [...tasks];
+        const [moved] = copy.splice(from, 1);    //plocka ut
+        copy.splice(to, 0, moved);              //sätt in på ny plats
+
+        return copy;
+    });
+  }
+
 }
